@@ -13,14 +13,22 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+
       - name: setup java 17
         uses: actions/checkout@v4
         with:
           distribution: temurin
           java-version: '17'
           cache: maven
+
+      - name: Give execute permission to Maven Wrapper
+        run: chmod +x mvnw
+
+
       - name: Build Project
         run: ./mvnw clean install
+
       - name: Upload JAR
         uses: actions/upload-artifact@v4
         with:
