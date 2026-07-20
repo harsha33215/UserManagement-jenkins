@@ -31,8 +31,8 @@ jobs:
         uses: actions/checkout@v4
 
 
-      - name: setup java 17
-        uses: actions/checkout@v4
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
@@ -41,9 +41,27 @@ jobs:
       - name: Give execute permission to Maven Wrapper
         run: chmod +x mvnw
 
+      - name: Display Java Version
+        run: java -version
 
-      - name: Build Project
-        run: ./mvnw clean install
+      - name: Clean Project
+        run: ./mvnw clean
+
+      - name: Compile Project
+        run: ./mvnw compile
+
+      - name: Run Unit Tests
+        run: ./mvnw test
+      - name: Upload Test Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: target/surefire-reports/
+
+
+      - name: Package Application
+        run: ./mvnw package -DskipTests
 
       - name: Upload JAR
         uses: actions/upload-artifact@v4
