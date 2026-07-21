@@ -56,10 +56,7 @@ jobs:
       - name: SonarCloud Scan
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          ./mvnw sonar:sonar \
-            -Dsonar.token=${SONAR_TOKEN}
-          
+        run: ./mvnw sonar:sonar -Dsonar.token=${SONAR_TOKEN}
             
 
       - name: Upload JaCoCo Report
